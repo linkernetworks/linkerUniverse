@@ -1,0 +1,14 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "spark_docker": "mesosphere/spark:1.6.0"
+      }
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/universe/assets/icon-service-spark-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/universe/assets/icon-service-spark-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/universe/assets/icon-service-spark-large.png"
+  }
+}

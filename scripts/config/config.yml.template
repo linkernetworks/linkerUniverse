@@ -1,0 +1,41 @@
+package_1:
+  # optional, if not provided, use the current version
+  version:
+  # optional, default is false
+  # boolean, true -> create new dir as current working version with version info above
+  create:
+
+  # resource.json->assets->uris
+  uri:
+    # optional, change the prefix for all uris exclude provided uri items below
+    # lower priority than uri_name below
+    all:
+    # higher priority than all if provided
+    uri_name_1:
+    uri_name_2:
+
+  # resource.json->assets->container->docker
+  docker:
+    image_name_1:
+    image_name_1:
+
+  # resource.json->cli->binaries->platform->x86-64->url
+  cli:
+     # for macos
+    darwin:
+    # for linux
+    linux:
+    # for windows
+    windows:
+
+  # command.json->pip
+  command:
+
+
+
+package_2:
+  # ...
+
+
+package_3:
+  # ...

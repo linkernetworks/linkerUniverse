@@ -1,0 +1,38 @@
+# package:
+#   version: (optional, if not provided, use the current version)
+#   create: (boolean, true -> create new dir as current version with above version)
+#   uri: (resource.json->assets->uris)
+#     all: (optional, change the prefix for all uris exclude provided below, lower priority)
+#     uri_name_1: (higher priority than all if provided)
+#     uri_name_2:
+#   docker: (docker images)
+#     image_name_1: 
+#     image_name_1:
+#   command: (currently only pip supported)
+    
+
+cassandra:
+  create: false
+  uri:
+    all: https://downloads.mesosphere.com/cassandra/assets/1.0.7-2.2.5/
+  cli:
+    darwin: https://downloads.mesosphere.io/cassandra/assets/1.0.7-2.2.5/cli/darwin-x86-64/dcos-cassandra
+    linux: https://downloads.mesosphere.io/cassandra/assets/1.0.7-2.2.5/cli/linux-x86-64/dcos-cassandra
+    windows: https://downloads.mesosphere.io/cassandra/assets/1.0.7-2.2.5/cli/windows-x86-64/dcos-cassandra.exe
+  command: https://s3.amazonaws.com/downloads.mesosphere.io/cassandra/assets/1.0.7-2.2.5/dcos-cassandra-0.1.0.tar.gz
+
+spark:
+  create: false
+  docker:
+    spark_docker: mesosphere/spark:1.6.0
+  command: https://downloads.mesosphere.com/spark/assets/dcos_spark-0.5.6-py2.py3-none-any.whl
+
+kafka:
+  create: false
+  uri:
+    jre-tar-gz: https://s3.amazonaws.com/downloads.mesosphere.io/kafka/assets/jre-8u72-linux-x64.tar.gz
+    kafka_tgz: https://s3.amazonaws.com/downloads.mesosphere.io/kafka/assets/kafka_2.10-0.9.0.1.tgz
+    scheduler-zip: https://s3.amazonaws.com/downloads.mesosphere.io/kafka/assets/1.0.7-0.9.0.1/scheduler.zip
+    overrider-zip: https://s3.amazonaws.com/downloads.mesosphere.io/kafka/assets/1.0.7-0.9.0.1/overrider.zip
+  command: https://s3.amazonaws.com/downloads.mesosphere.io/kafka/assets/0.2.5-0.9.0.1/dcos-kafka-0.2.5.zip
+  
