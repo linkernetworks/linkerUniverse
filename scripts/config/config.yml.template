@@ -17,11 +17,11 @@ package_1:
   # resource.json->assets->container->docker
   docker:
     image_name_1:
-    image_name_1:
+    image_name_2:
 
   # resource.json->cli->binaries->platform->x86-64->url
   cli:
-     # for macos
+    # for macos
     darwin:
     # for linux
     linux:

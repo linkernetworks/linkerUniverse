@@ -2,7 +2,7 @@
   "assets": {
     "container": {
       "docker": {
-        "spark_docker": "mesosphere/spark:1.6.0"
+        "spark-docker": "mesosphere/spark:1.6.0"
       }
     }
   },

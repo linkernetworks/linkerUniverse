@@ -1,29 +1,29 @@
 # Linker Universe
-=================
 
-The Linker Universe package repository, originally from [mesosphere/universe](http://mesosphere.github.io/universe/), tested by Linker(MingDong).
+The Linker Universe package repository, originally from [mesosphere/universe](http://mesosphere.github.io/universe/), tested by Linker(Mingdong).
 
 
 ## Linker DC/OS
-----------
-currently supported framework/package:
+
+currently supported frameworks/packages:
 
 |package|version|
 |---|---|
-|cassandra	| 2.2.5	|
+|cassandra| 2.2.5|
 |kafka|0.9.0.1|
 |spark|1.6.0|
 
 
 ## Usage
-----------
+
+
 Please refer to [mesosphere/universe](https://github.com/mesosphere/universe) for details.
 
 ### tools
 
 #### package_util.py
 
-tiny script for list/update package configuration, which only is compatible with a group of limited scenarios.
+tiny script for listing/updating package configuration, which only compatible with a group of limited scenarios.
 
 ```
 ./scripts/config/package_util.py -h
@@ -61,8 +61,28 @@ updating **uri/docker/command/cli** in `repo/package/{A...Z}/package/version(:di
 ```
 ./scripts/config/package_util.py -u
 ```
+
 with option `-f`, the following provided *YAML* file will be used.
 
+```yaml
+package_1:
+  version:
+  create: (None|true|false)
+  uri:
+    uri_name_1:
+    uri_name_2:
+    all:
+  docker:
+    image_name_1:
+    image_name_2:
+  cli:
+    darwin:
+    linux:
+    windows:
+  command:
+
+package_2:
+```
 
 #### generate-config-reference.py
 
@@ -82,7 +102,6 @@ such format table will be generated via items belong to *properties* in `package
 
 #### build.sh
 
-
 ```
 ./scripts/build.sh
 ```
@@ -96,14 +115,4 @@ dcos package repo add [--index=<index>] <repo-name> <repo-url>
 
 <repo-url> points to somewhere the zip-file stay...
 ```
-
-
-
-
-
-
-
-
-
-
 
