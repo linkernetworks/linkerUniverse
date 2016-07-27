@@ -12,6 +12,7 @@ currently supported frameworks/packages:
 |cassandra| 2.2.5|
 |kafka|0.9.0.1|
 |spark|1.6.0|
+|kafka-manager|1.3.0.8|
 
 
 ## Usage
