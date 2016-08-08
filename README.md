@@ -8,11 +8,14 @@ The Linker Universe package repository, originally from [mesosphere/universe](ht
 currently supported frameworks/packages:
 
 |package|version|
-|---|---|
-|cassandra| 2.2.5|
-|kafka|0.9.0.1|
-|spark|1.6.0|
-|kafka-manager|1.3.0.8|
+|:---|:---:|
+|[cassandra](http://cassandra.apache.org)| 2.2.5|
+|[chronos](https://mesos.github.io/chronos/)|2.4.0|
+|[kafka](http://kafka.apache.org)|0.9.0.1|
+|[kafka-manager](https://github.com/yahoo/kafka-manager)|1.3.0.8|
+|[spark](http://spark.apache.org/docs/1.6.0/index.html)|1.6.0|
+
+~~|[marathon-lb](https://github.com/mesosphere/marathon-lb)|1.3.2|~~
 
 
 ## Usage
@@ -68,7 +71,7 @@ with option `-f`, the following provided *YAML* file will be used.
 ```yaml
 package_1:
   version:
-  create: (None|true|false)
+  create:
   uri:
     uri_name_1:
     uri_name_2:
