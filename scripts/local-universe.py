@@ -167,7 +167,8 @@ def enumerate_http_resources(package, package_path):
             commands = json.load(json_file)
 
         for url in commands.get("pip", []):
-            yield url, pathlib.Path(package, 'commands')
+            if url.startswith('http'):
+                yield url, pathlib.Path(package, 'commands')
 
 
 def enumerate_docker_images(package_path):
@@ -289,7 +290,8 @@ def prepare_repository(package, package_path, source_repo, dest_repo):
             urllib.parse.urljoin(
                 HTTP_ROOT, str(pathlib.PurePath(
                     package, "commands", pathlib.Path(uri).name)))
-            for uri in command.get("pip", [])
+            if uri.startswith('http') else uri for uri in command.get("pip", [])
+            #for uri in command.get("pip", [])
         ]
         json.dump(command, dest_file, indent=4)
 
