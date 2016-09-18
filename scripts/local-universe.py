@@ -15,10 +15,10 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import zipfile
 
 HTTP_ROOT = "http://master.mesos:8082/"
 DOCKER_ROOT = "master.mesos:5000"
-
 
 def main():
     # Docker writes files into the tempdir as root, you need to be running
@@ -66,7 +66,8 @@ def main():
 
     package_names = [name for name in args.include.split(',') if name != '']
 
-    with tempfile.TemporaryDirectory() as dir_path, run_docker_registry(dir_path / pathlib.Path("registry")):
+    with tempfile.TemporaryDirectory() as dir_path, \
+            run_docker_registry(dir_path / pathlib.Path("registry")):
 
         http_artifacts = dir_path / pathlib.Path("http")
         docker_artifacts = dir_path / pathlib.Path("registry")
@@ -76,12 +77,11 @@ def main():
         os.makedirs(str(repo_artifacts))
 
         failed_packages = []
-
         def handle_package(opts):
             package, path = opts
             try:
-                prepare_repository(package, path, pathlib.Path(args.repository), repo_artifacts)
-
+                prepare_repository(package, path, pathlib.Path(args.repository),
+                    repo_artifacts)
                 for url, archive_path in enumerate_http_resources(package, path):
                     add_http_resource(http_artifacts, url, archive_path)
 
@@ -97,10 +97,10 @@ def main():
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
             for package in executor.map(handle_package,
-                                        enumerate_dcos_packages(
-                                            pathlib.Path(args.repository),
-                                            package_names,
-                                            args.selected)):
+                    enumerate_dcos_packages(
+                        pathlib.Path(args.repository),
+                        package_names,
+                        args.selected)):
                 print("Completed: {}".format(package))
 
         build_repository(pathlib.Path(
@@ -159,34 +159,13 @@ def enumerate_http_resources(package, package_path):
     for name, url in resource.get('assets', {}).get('uris', {}).items():
         yield url, pathlib.Path(package, 'uris')
 
-    for k in resource.get('cli', {}).get('binaries', {}):
-        url = resource.get('cli', {}).get('binaries', {}).get(k, {}).get('x86-64', {}).get('url', '')
-        yield url, pathlib.Path(package, 'cli', k)
-
     command_path = (package_path / 'command.json')
     if command_path.exists():
         with command_path.open() as json_file:
             commands = json.load(json_file)
 
         for url in commands.get("pip", []):
-            if url.startswith('http'):
-                yield url, pathlib.Path(package, 'commands')
-
-    def traverse_yield(d, key='root'):
-        if isinstance(d, dict):
-            if 'default' in d and str(d['default']).startswith('http'):
-                url = d['default']
-                yield url, pathlib.Path(package, 'config', key)
-            else:
-                for k, v in d.items():
-                    yield from traverse_yield(v, k)
-
-    config_path = (package_path / 'config.json')
-    if config_path.exists():
-        with config_path.open() as json_file:
-            config = json.load(json_file)
-            for url, path in traverse_yield(config):
-                yield url, path
+            yield url, pathlib.Path(package, 'commands')
 
 
 def enumerate_docker_images(package_path):
@@ -201,9 +180,9 @@ def enumerate_docker_images(package_path):
 @contextlib.contextmanager
 def run_docker_registry(volume_path):
     print('Start docker registry.')
-    command = ['docker', 'run', '-d', '-p', '5000:5000', '--name',
-               'registry', '-v', '{}:/var/lib/registry'.format(volume_path),
-               'registry:2.4.0']
+    command = [ 'docker', 'run', '-d', '-p', '5000:5000', '--name',
+        'registry', '-v', '{}:/var/lib/registry'.format(volume_path),
+        'registry:2.4.0']
 
     subprocess.check_call(command)
 
@@ -229,12 +208,10 @@ def format_image_name(host, name):
 
     return '{}/{}'.format(host, name)
 
-
 def upload_docker_image(name):
     print('Pushing docker image: {}'.format(name))
     command = ['docker', 'tag', name,
-               format_image_name('localhost:5000', name)]
-
+        format_image_name('localhost:5000', name)]
     subprocess.check_call(command)
 
     command = ['docker', 'push', format_image_name('localhost:5000', name)]
@@ -250,15 +227,15 @@ def build_universe_docker(dir_path):
         str(current_dir / '..' / 'docker' / 'local-universe' / 'Dockerfile'),
         str(dir_path / 'Dockerfile'))
 
-    command = ['docker', 'build', '-t',
-               'mesosphere/universe:{:.0f}'.format(time.time()),
-               '-t', 'mesosphere/universe:latest', '.']
-
+    command = [ 'docker', 'build', '-t',
+        'mesosphere/universe:{:.0f}'.format(time.time()),
+        '-t', 'mesosphere/universe:latest', '.' ]
     subprocess.check_call(command, cwd=str(dir_path))
 
 
 def add_http_resource(dir_path, url, base_path):
-    archive_path = (dir_path / base_path / pathlib.Path(urllib.parse.urlparse(url).path).name)
+    archive_path = (dir_path / base_path /
+        pathlib.Path(urllib.parse.urlparse(url).path).name)
     print('Adding {} at {}.'.format(url, archive_path))
     os.makedirs(str(archive_path.parent), exist_ok=True)
     urllib.request.urlretrieve(url, str(archive_path))
@@ -268,16 +245,17 @@ def prepare_repository(package, package_path, source_repo, dest_repo):
     dest_path = dest_repo / package_path.relative_to(source_repo)
     shutil.copytree(str(package_path), str(dest_path))
 
-    with (package_path / 'resource.json').open() as source_file, (dest_path / 'resource.json').open('w') as dest_file:
+    with (package_path / 'resource.json').open() as source_file, \
+            (dest_path / 'resource.json').open('w') as dest_file:
         resource = json.load(source_file)
 
         # Change the root for images (ignore screenshots)
-        resource["images"] = {
-            n: urllib.parse.urljoin(
-                HTTP_ROOT, str(pathlib.PurePath(
-                    package, "images", pathlib.Path(uri).name)))
-            for n, uri in resource.get("images", {}).items() if 'icon' in n}
-
+        if 'images' in resource:
+            resource["images"] = {
+                n: urllib.parse.urljoin(
+                    HTTP_ROOT, str(pathlib.PurePath(
+                        package, "images", pathlib.Path(uri).name)))
+                for n,uri in resource.get("images", {}).items() if 'icon' in n}
         # Change the root for asset uris.
         if 'assets' in resource:
             resource["assets"]["uris"] = {
@@ -290,56 +268,34 @@ def prepare_repository(package, package_path, source_repo, dest_repo):
         if 'container' in resource["assets"]:
             resource["assets"]["container"]["docker"] = {
                 n: format_image_name(DOCKER_ROOT, image_name)
-                for n, image_name in resource["assets"]["container"].get("docker", {}).items()}
-
-        # Change the root for the cli
-        if 'cli' in resource:
-            for k in resource["cli"]["binaries"]:
-                url = resource["cli"]["binaries"][k].get("x86-64", {}).get("url", "")
-                resource["cli"]["binaries"][k]["x86-64"]["url"] = urllib.parse.urljoin(
-                    HTTP_ROOT, str(pathlib.PurePath(package, "cli", k, pathlib.Path(url).name)))
+                for n, image_name in resource["assets"]["container"].get(
+                    "docker", {}).items() }
 
         json.dump(resource, dest_file, indent=4)
-
-    def traverse(d, key='root'):
-        if isinstance(d, dict):
-            if 'default' in d and str(d['default']).startswith('http'):
-                url = d['default']
-                d['default'] = urllib.parse.urljoin(
-                    HTTP_ROOT, str(pathlib.PurePath(package, "config", key, pathlib.Path(url).name)))
-            else:
-                for k, v in d.items():
-                    traverse(v, k)
-
-    config_path = (package_path / 'config.json')
-    if config_path.exists():
-        with config_path.open() as source_file, (dest_path / 'config.json').open('w') as dest_file:
-            config = json.load(source_file)
-            traverse(config)
-            json.dump(config, dest_file, indent=4)
 
     command_path = (package_path / 'command.json')
     if not command_path.exists():
         return
 
-    with command_path.open() as source_file, (dest_path / 'command.json').open('w') as dest_file:
+    with command_path.open() as source_file, \
+            (dest_path / 'command.json').open('w') as dest_file:
         command = json.load(source_file)
 
         command['pip'] = [
             urllib.parse.urljoin(
                 HTTP_ROOT, str(pathlib.PurePath(
                     package, "commands", pathlib.Path(uri).name)))
-            if uri.startswith('http') else uri for uri in command.get("pip", [])
-            # for uri in command.get("pip", [])
+            for uri in command.get("pip", [])
         ]
         json.dump(command, dest_file, indent=4)
 
 
 def build_repository(scripts_dir, repo_dir, dest_dir):
     shutil.copytree(str(scripts_dir), str(dest_dir / "scripts"))
-    shutil.copytree(str(repo_dir / '..' / 'meta'), str(dest_dir / 'repo' / 'meta'))
+    shutil.copytree(str(repo_dir / '..' / 'meta'),
+        str(dest_dir / 'repo' / 'meta'))
 
-    command = ["bash", "scripts/build.sh"]
+    command = [ "bash", "scripts/build.sh" ]
     subprocess.check_call(command, cwd=str(dest_dir))
 
 

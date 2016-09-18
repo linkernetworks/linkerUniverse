@@ -1,7 +1,35 @@
 # Linker Universe
 
-The Linker Universe package repository, originally from [mesosphere/universe](http://mesosphere.github.io/universe/), tested by Linker(Mingdong).
+The Linker Universe package repository, originally from [mesosphere/universe](http://mesosphere.github.io/universe/), tested by Linker([@tangmingdong123](https://github.com/tangmingdong123), [@adolphlwq](https://github.com/adolphlwq) and [@tjsongzw](https://github.com/tjsongzw)).
 
+## Usage for linkerUniverse
+### prerequisites
+- python3
+- pip
+- jsonschema
+
+### generated package ziped file
+**must ensure python3 is active**
+```
+bash path_to_linkerUniverse/scripts/build.sh
+```
+After above shell script,it will generated some files in folder **target**:
+```
+target/
+├── lrepo.zip
+├── repo-empty-v3.json
+├── repo-up-to-1.10.json
+├── repo-up-to-1.6.1.zip
+├── repo-up-to-1.7.zip
+├── repo-up-to-1.8.json
+├── repo-up-to-1.9.json
+└── universe.json
+```
+The *.zip files are needed and valid for you own DC/OS package. If your package file is invalid, you may run into below problem:
+```
+dcos package search spark
+Index file missing for repo [http://10.140.0.3/linkerrepo.zip]
+```
 
 ## Linker DC/OS
 
@@ -17,15 +45,9 @@ currently supported frameworks/packages:
 
 ~~|[marathon-lb](https://github.com/mesosphere/marathon-lb)|1.3.2|~~
 
+## Tools
 
-## Usage
-
-
-Please refer to [mesosphere/universe](https://github.com/mesosphere/universe) for details.
-
-### tools
-
-#### package_util.py
+### package_util.py
 
 tiny script for listing/updating package configuration, which only compatible with a group of limited scenarios.
 
@@ -88,23 +110,23 @@ package_1:
 package_2:
 ```
 
-#### generate-config-reference.py
+### generate-config-reference.py
 
 ```
 Usage:  ./scripts/generate-config-reference.py [/path/to/universe/repo/packages]
 ```
 
-by *mesosphere*, 
+by *mesosphere*,
 
 
 | Property | Type | Description | Default Value |
 |----------|------|-------------|---------------|
-|	|	|	|	
+|	|	|	|
 
 such format table will be generated via items belong to *properties* in `package/version/config.json`
 
 
-#### build.sh
+### build.sh
 
 ```
 ./scripts/build.sh
@@ -119,4 +141,3 @@ dcos package repo add [--index=<index>] <repo-name> <repo-url>
 
 <repo-url> points to somewhere the zip-file stay...
 ```
-
