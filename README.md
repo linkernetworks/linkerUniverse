@@ -25,7 +25,7 @@ target/
 ├── repo-up-to-1.9.json
 └── universe.json
 ```
-The *.zip files are needed and valid for you own DC/OS package. If your package file is invalid, you may run into below problem:
+The ***.zip files** are needed and valid for you own DC/OS package. If your package file is invalid, you may run into below problem:
 ```
 dcos package search spark
 Index file missing for repo [http://10.140.0.3/linkerrepo.zip]
@@ -141,3 +141,8 @@ dcos package repo add [--index=<index>] <repo-name> <repo-url>
 
 <repo-url> points to somewhere the zip-file stay...
 ```
+
+## TODOs
+- [ ] Use linker own spark image for dcos Spark service.
+- [ ] Test can cassandra-1.0.7-2.2.5 run on bigdata cluster.
+- [ ] Test Kafka
