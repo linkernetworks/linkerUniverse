@@ -1,10 +1,10 @@
 {
   "assets": {
     "uris": {
-      "scheduler-zip":"https://downloads.mesosphere.com/cassandra/assets/1.0.7-2.2.5/scheduler.zip",
-      "executor-zip":"https://downloads.mesosphere.com/cassandra/assets/1.0.7-2.2.5/executor.zip",
-      "jre-tar-gz":"https://downloads.mesosphere.com/cassandra/assets/1.0.7-2.2.5/server-jre-8u74-linux-x64.tar.gz",
-      "apache-cassandra-bin-tar-gz":"https://downloads.mesosphere.com/cassandra/assets/1.0.7-2.2.5/apache-cassandra-2.2.5-bin-dcos.tar.gz"
+      "scheduler-zip":"http://10.140.0.3/1.0.7-2.2.5/scheduler.zip",
+      "executor-zip":"http://10.140.0.3/1.0.7-2.2.5/executor.zip",
+      "jre-tar-gz":"http://10.140.0.3/server-jre-8u74-linux-x64.tar.gz",
+      "apache-cassandra-bin-tar-gz":"http://10.140.0.3/apache-cassandra-2.2.5-bin-dcos.tar.gz"
     }
   },
   "images": {
@@ -20,7 +20,7 @@
             { "algo": "sha256", "value": "987c201247e0849a27ca21f33fd31c4446cce87a5b07908d885e88bd19ea3a78" }
           ],
           "kind": "executable",
-          "url":"https://downloads.mesosphere.io/cassandra/assets/1.0.7-2.2.5/cli/darwin-x86-64/dcos-cassandra"
+          "url":"http://downloads.mesosphere.io/cassandra/assets/1.0.7-2.2.5/cli/darwin-x86-64/dcos-cassandra"
         }
       },
       "linux":{
@@ -29,7 +29,7 @@
             { "algo":"sha256", "value":"acebd31f5aa9f261b978da1f46081695242ed2726fb4f705ef6feb8213540c9b" }
           ],
           "kind":"executable",
-          "url":"https://downloads.mesosphere.io/cassandra/assets/1.0.7-2.2.5/cli/linux-x86-64/dcos-cassandra"
+          "url":"http://10.140.0.3/linux-x86-64/dcos-cassandra"
         }
       },
       "windows":{

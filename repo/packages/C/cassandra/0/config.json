@@ -34,19 +34,19 @@
 					"id": "http://cassandra/docs/mesosphere.com/service/cpus",
 					"type": "number",
 					"description": "The cpu shares used by the Cassandra service scheduler.",
-					"default": 0.5
+					"default": 0.1
 				},
 				"mem": {
 					"id": "http://cassandra/docs/mesosphere.com/service/mem",
 					"type": "integer",
 					"description": "The memory used by the Cassandra service scheduler in Mb.",
-					"default": 2048
+					"default": 1024
 				},
 				"heap": {
 					"id": "http://cassandra/docs/mesosphere.com/service/heap",
 					"type": "integer",
 					"description": "The JVM heap used by the Cassandra service scheduler in Mb.",
-					"default": 1024
+					"default": 512
 				},
 				"api_port" : {
 					"id": "http://cassandra/docs/mesosphere.com/service/api_port",
@@ -87,13 +87,13 @@
 					"id": "http://cassandra/docs/mesosphere.com/node/cpus",
 					"type": "number",
 					"description": "The number of cpu shares allocated to the Cassandra process.",
-					"default": 0.5
+					"default": 0.1
 				},
 				"mem": {
 					"id": "http://cassandra/docs/mesosphere.com/node/mem",
 					"type": "integer",
 					"description": "The amount of memory, in MB, allocated to the Cassandra process.",
-					"default": 4096
+					"default": 512
 				},
 				"disk": {
 					"id": "http://cassandra/docs/mesosphere.com/node/disk",
@@ -116,7 +116,7 @@
 							"id": "http://cassandra/docs/mesosphere.com/node/heap/size",
 							"type": "integer",
 							"description": "The amount of JVM heap, in MB, allocated to the Cassandra process.",
-							"default": 2048
+							"default": 512
 						},
 						"new": {
 							"id": "http://cassandra/docs/mesosphere.com/node/heap/new",

@@ -38,7 +38,7 @@
           "mem":{
             "description":"Broker mem requirements",
             "type":"integer",
-            "default":2048
+            "default":1024
           },
           "disk":{
             "description":"Broker disk requirements (only respected with persistent volumes)",
