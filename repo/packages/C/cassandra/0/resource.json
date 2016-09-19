@@ -1,8 +1,8 @@
 {
   "assets": {
     "uris": {
-      "scheduler-zip":"http://10.140.0.3/1.0.7-2.2.5/scheduler.zip",
-      "executor-zip":"http://10.140.0.3/1.0.7-2.2.5/executor.zip",
+      "scheduler-zip":"http://10.140.0.3/scheduler.zip",
+      "executor-zip":"http://10.140.0.3/executor.zip",
       "jre-tar-gz":"http://10.140.0.3/server-jre-8u74-linux-x64.tar.gz",
       "apache-cassandra-bin-tar-gz":"http://10.140.0.3/apache-cassandra-2.2.5-bin-dcos.tar.gz"
     }
