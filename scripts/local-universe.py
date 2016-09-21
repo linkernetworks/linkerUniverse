@@ -15,6 +15,8 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import httplib2
+
 
 HTTP_ROOT = "http://master.mesos:8082/"
 DOCKER_ROOT = "master.mesos:5000"
@@ -176,7 +178,8 @@ def enumerate_http_resources(package, package_path):
         if isinstance(d, dict):
             if 'default' in d and str(d['default']).startswith('http'):
                 url = d['default']
-                yield url, pathlib.Path(package, 'config', key)
+                if valid_download(url):
+                    yield url, pathlib.Path(package, 'config', key)
             else:
                 for k, v in d.items():
                     yield from traverse_yield(v, k)
@@ -305,8 +308,9 @@ def prepare_repository(package, package_path, source_repo, dest_repo):
         if isinstance(d, dict):
             if 'default' in d and str(d['default']).startswith('http'):
                 url = d['default']
-                d['default'] = urllib.parse.urljoin(
-                    HTTP_ROOT, str(pathlib.PurePath(package, "config", key, pathlib.Path(url).name)))
+                if valid_download(url):
+                    d['default'] = urllib.parse.urljoin(
+                        HTTP_ROOT, str(pathlib.PurePath(package, "config", key, pathlib.Path(url).name)))
             else:
                 for k, v in d.items():
                     traverse(v, k)
@@ -348,6 +352,9 @@ def remove_package(package, base_dir):
         for dirname in fnmatch.filter(dirnames, package):
             shutil.rmtree(os.path.join(root, dirname))
 
+def valid_download(url):
+    response = httplib2.Http().request(url, 'HEAD')
+    return int(response[0]['status']) < 400
 
 if __name__ == '__main__':
     sys.exit(main())
