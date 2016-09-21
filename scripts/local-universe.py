@@ -16,6 +16,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import httplib2
+import validators
 
 
 HTTP_ROOT = "http://master.mesos:8082/"
@@ -352,9 +353,9 @@ def remove_package(package, base_dir):
         for dirname in fnmatch.filter(dirnames, package):
             shutil.rmtree(os.path.join(root, dirname))
 
+
 def valid_download(url):
-    response = httplib2.Http().request(url, 'HEAD')
-    return int(response[0]['status']) < 400
+    return bool(validators.url(url)) and int(httplib2.Http().request(url, 'HEAD')[0]['status']) < 400
 
 if __name__ == '__main__':
     sys.exit(main())

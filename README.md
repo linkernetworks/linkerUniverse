@@ -5,6 +5,8 @@ The Linker Universe package repository, originally from [mesosphere/universe](ht
 ## Usage for linkerUniverse
 ### prerequisites
 - python3
+  - httplib2
+  - validators
 - pip
 - jsonschema
 
