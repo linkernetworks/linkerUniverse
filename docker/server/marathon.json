@@ -8,7 +8,7 @@
     "type": "DOCKER",
     "docker": {
       "network": "BRIDGE",
-      "image": "mesosphere/universe-server:$tag",
+      "image": "linkerrepository/universe-server:$tag",
       "portMappings": [
         {
           "containerPort": 80,

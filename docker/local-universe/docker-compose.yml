@@ -1,11 +1,11 @@
 nginx:
-  image: mesosphere/universe
+  image: linkerrepository/universe
   container_name: universe-http
   ports:
     - "8082:80"
   command: nginx -g "daemon off;"
 registry:
-  image: mesosphere/universe
+  image: linkerrepository/universe
   container_name: universe-registry
   environment:
       - REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt
