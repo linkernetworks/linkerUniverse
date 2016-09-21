@@ -253,8 +253,8 @@ def build_universe_docker(dir_path):
         str(dir_path / 'Dockerfile'))
 
     command = ['docker', 'build', '-t',
-               'mesosphere/universe:{:.0f}'.format(time.time()),
-               '-t', 'mesosphere/universe:latest', '.']
+               'linkerrepository/universe:{:.0f}'.format(time.time()),
+               '-t', 'linkerrepository/universe:latest', '.']
 
     subprocess.check_call(command, cwd=str(dir_path))
 
