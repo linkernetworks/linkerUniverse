@@ -43,7 +43,7 @@ currently supported frameworks/packages:
 |[chronos](https://mesos.github.io/chronos/)|2.4.0|
 |[kafka](http://kafka.apache.org)|0.9.0.1|
 |[kafka-manager](https://github.com/yahoo/kafka-manager)|1.3.0.8|
-|[spark](http://spark.apache.org/docs/1.6.0/index.html)|1.6.0|
+|[spark](https://spark.apache.org/docs/2.0.0/index.html)|2.0.0|
 
 ~~|[marathon-lb](https://github.com/mesosphere/marathon-lb)|1.3.2|~~
 

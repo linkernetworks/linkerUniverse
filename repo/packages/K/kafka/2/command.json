@@ -1,0 +1,5 @@
+{
+  "pip": [
+    "http://manager.linkerdcos.io:8081/artifacts/kafka/dcos-kafka-0.2.0.tar.gz"
+  ]
+}
