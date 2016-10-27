@@ -41,8 +41,7 @@
 1. To pull from this new repository, you'll need to setup the docker daemon on every agent to have a valid SSL certificate. To do this, on every agent in your cluster, run the following:
 
     ```bash
-    $ mkdir -p /etc/docker/certs.d/master.mesos:5000
-    $ curl -o /etc/docker/certs.d/master.mesos:5000/ca.crt http://master.mesos:8082/certs/domain.crt
+    $ sudo mkdir -p /etc/docker/certs.d/master.mesos:5000 && sudo curl -o /etc/docker/certs.d/master.mesos:5000/ca.crt http://master.mesos:8082/certs/domain.crt
     $ systemctl restart docker
     ```
 
