@@ -3,7 +3,7 @@
     "uris": {
       "jre-7u79-openjdk-tgz": "http://manager.linkerdcos.io:8081/artifacts/kafka/jre-7u79-openjdk.tgz",
       "kafka_2-10-0-8-2-1-tgz": "http://manager.linkerdcos.io:8081/artifacts/kafka/kafka_2.10-0.8.2.1.tgz",
-      "kafka-mesos-0-9-2-0-jar": "http://manager.linkerdcos.io:8081/artifacts/kafka/kafka-mesos-0.9.3.0.jar"
+      "kafka-mesos-0-9-2-0-jar": "http://manager.linkerdcos.io:8081/artifacts/kafka/kafka-mesos-0.9.2.0.jar"
     }
   },
   "images": {
